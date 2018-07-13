@@ -52,3 +52,18 @@ body{
   width: 91% !important;
   margin-right: 10px;
 }
+.red{
+  color: red;
+}
+.blue{
+  color: blue;
+}
+.history{
+  background-color: white;
+}
+.right{
+  text-align: right;
+}
+.left{
+  text-align: left;
+}

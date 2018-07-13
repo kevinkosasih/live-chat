@@ -49,7 +49,6 @@ class Home extends Component{
            this.setState({
              conv:newhistory
            })
-           console.log(err);
          })
        })
      } else {
@@ -97,19 +96,24 @@ class Home extends Component{
    onSend(e){
      e.preventDefault()
      var recive = ' '
-     if(this.state.account.username == 'keke'){
+     if(this.state.chat){
+       if(this.state.account.username == 'keke'){
        recive = "kevin"
-     }
-     else{
-       recive = "keke"
-     }
-     let msg  = {
-       name:this.state.account.name,
-       text:this.state.chat,
-       reciever:recive,
-       sender:this.state.account.username
-     }
-     sendChat(msg)
+       }
+       else{
+         recive = "keke"
+       }
+       let msg  = {
+         name:this.state.account.name,
+         text:this.state.chat,
+         reciever:recive,
+         sender:this.state.account.username
+       }
+       sendChat(msg)
+       this.setState({
+         chat:''
+       })
+               }
    }
   render(){
     const obj = getFromStorage('http://localhost:3000');
@@ -137,15 +141,24 @@ class Home extends Component{
           <ChatBox name= {account.name}/>
         </div>
         <div className = 'coversations'>
-          {conv ? conv.map(chat =>
-              <div>
-                <hr/>
-                {chat.name}
-                <hr/>
-                {chat.text}
+          {conv ? conv.map(chat =>{
+            var color = 'blue'
+            var align = 'right'
+            if(chat.send == 1){
+              color = 'red'
+              align = 'left'
+            }
+            return(
+              <div className={"history "+align}>
+              {console.log(color)}
+                <p className={color}><hr />
+                {chat.message.name}
+                <hr/></p>
+                {chat.message.text}
                 <hr/>
               </div>
             )
+          })
           :
           (null)
         }

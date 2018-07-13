@@ -49,9 +49,8 @@ const port = 3001;
 io.on('connection', (client) => {
   console.log("connected");
   client.on('sendChat', (message) => {
-    console.log(message);
-    client.broadcast.emit(message.reciever,message);
-    client.emit(message.sender,message);
+    client.broadcast.emit(message.reciever,{message,send:1});
+    client.emit(message.sender,{message,send:0});
   });
 });
 io.listen(8000);
