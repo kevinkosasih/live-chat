@@ -23,7 +23,7 @@ app.use(compression());
 const config = require('./config/database');
 //connect to mongoDB
 mongoose.connect(config.database);
-//validate connection to mongoDB
+// validate connection to mongoDB
 mongoose.connection.on('connected',() => {
   console.log('Connected to '+config.database);
 })
@@ -49,8 +49,9 @@ const port = 3001;
 io.on('connection', (client) => {
   console.log("connected");
   client.on('sendChat', (message) => {
-    client.broadcast.emit('recieveChat',message);
-    client.emit('recieveChat',message);
+    console.log(message);
+    client.broadcast.emit(message.reciever,message);
+    client.emit(message.sender,message);
   });
 });
 io.listen(8000);

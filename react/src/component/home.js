@@ -29,12 +29,6 @@ class Home extends Component{
     this.onTextboxChange = this.onTextboxChange.bind(this)
     this.onSend = this.onSend.bind(this)
 
-    recieveChat((err,recieve)=>{
-      let newhistory = this.state.conv.concat(recieve);
-      this.setState({
-        conv:newhistory
-      })
-    })
   }
 
   componentDidMount(){
@@ -48,12 +42,21 @@ class Home extends Component{
            isLoading:false
          })
        })
+       .then(json =>{
+         console.log(this.state.account.username);
+         recieveChat(this.state.account.username,(err,recieve)=>{
+           let newhistory = this.state.conv.concat(recieve);
+           this.setState({
+             conv:newhistory
+           })
+           console.log(err);
+         })
+       })
      } else {
        this.setState({
          isLoading: false,
        });
      }
-
   }
 
   logout(e) {
@@ -93,11 +96,19 @@ class Home extends Component{
    }
    onSend(e){
      e.preventDefault()
+     var recive = ' '
+     if(this.state.account.username == 'keke'){
+       recive = "kevin"
+     }
+     else{
+       recive = "keke"
+     }
      let msg  = {
        name:this.state.account.name,
        text:this.state.chat,
+       reciever:recive,
+       sender:this.state.account.username
      }
-     console.log(this.state.account);
      sendChat(msg)
    }
   render(){
@@ -115,7 +126,7 @@ class Home extends Component{
           <p>Loading...</p>
           </div>);
     }
-    if(loggedOut || !obj.token  ){
+    if(loggedOut || !obj  ){
       return(<Redirect to='/'/>)
     }
 
@@ -139,7 +150,7 @@ class Home extends Component{
           (null)
         }
         </div>
-        <div className='textchat col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3'>
+        <div className='textchat '>
           <form className='form-inline'>
             <input type  = 'text' className='textbox form-control' placeholder='input text here ...' value={chat} onChange={this.onTextboxChange}/>
             <input type = 'submit' className='btn btn-info' value="Send" onClick={this.onSend}/>

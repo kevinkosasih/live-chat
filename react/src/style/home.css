@@ -4,6 +4,7 @@ body{
 }
 .page{
   margin:0;
+  width: 100%;
   height: inherit;
 }
 #root{
@@ -30,22 +31,24 @@ body{
   border-top: transparent;
 }
 .coversations{
-  height: calc(100% - 78px);
+  height: calc(100% - 119px);
   background-color: rgb(186, 186, 186);
   width: calc(100% - 400px);
   display: inline-block;
   position: absolute;
+  overflow-y: auto;
 }
 .textchat{
-  background-color: rgb(0, 226, 172);
+  background-color: rgb(108, 99, 99);
   bottom: 0;
-  left: 0px;
+  left: 400px;
   position: fixed;
   padding-bottom: 5px;
   padding-top: 5px !important;
   padding-left: 15px;
+  width: calc(100% - 400px);
 }
 .textbox{
-  width: 90% !important;
+  width: 91% !important;
   margin-right: 10px;
 }

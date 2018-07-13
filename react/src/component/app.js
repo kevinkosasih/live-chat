@@ -5,11 +5,8 @@ import Home from './home'
 import { BrowserRouter as Router, Route,Switch } from "react-router-dom";
 import {
   setInStorage,
+  getFromStorage,
 } from '../token/token.js';
-
-  import {
-    getFromStorage,
-  } from '../token/token.js';
 
 class App extends Component {
   constructor(props) {
@@ -41,6 +38,7 @@ class App extends Component {
              token:'',
              isLoading: false,
            });
+           setInStorage('http://localhost:3000',null)
          }
        });
    } else {
