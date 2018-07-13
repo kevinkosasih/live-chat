@@ -138,13 +138,13 @@ class Home extends Component{
           :
           (null)
         }
+        </div>
         <div className='textchat col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3'>
           <form className='form-inline'>
             <input type  = 'text' className='textbox form-control' placeholder='input text here ...' value={chat} onChange={this.onTextboxChange}/>
             <input type = 'submit' className='btn btn-info' value="Send" onClick={this.onSend}/>
             </form>
           </div>
-        </div>
       </div>
     )
   }
