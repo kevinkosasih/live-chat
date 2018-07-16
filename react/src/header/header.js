@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 
 class Header extends Component{
-  constructor(props) {
-    super(props);
-}
-  componentDidUpdate(){
-
-  }
 
   render(){
 
@@ -17,7 +11,7 @@ class Header extends Component{
           <a className="p-2 text-dark">Home</a>
           <a className="p-2 text-dark">Profile</a>
           </nav>
-          <a className="btn btn-outline-primary" href="#" onClick={this.props.logout}>logout</a>
+          <a className="btn btn-outline-primary"  onClick={this.props.logout}>logout</a>
 
         </div>
     )

@@ -97,12 +97,13 @@ class Home extends Component{
      e.preventDefault()
      var recive = ' '
      if(this.state.chat){
-       if(this.state.account.username == 'keke'){
+       if(this.state.account.username === 'keke'){
        recive = "kevin"
        }
        else{
          recive = "keke"
        }
+       console.log(recive);
        let msg  = {
          name:this.state.account.name,
          text:this.state.chat,
@@ -144,13 +145,12 @@ class Home extends Component{
           {conv ? conv.map(chat =>{
             var color = 'blue'
             var align = 'right'
-            if(chat.send == 1){
+            if(chat.send === 1){
               color = 'red'
               align = 'left'
             }
             return(
               <div className={"history "+align}>
-              {console.log(color)}
                 <p className={color}><hr />
                 {chat.message.name}
                 <hr/></p>
