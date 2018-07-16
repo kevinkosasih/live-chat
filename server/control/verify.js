@@ -1,7 +1,5 @@
 const AccountSession = require('../models/accountsessionmodel');
 const Account = require('../models/accountmodel');
-const io = require('socket.io')();
-
 
 module.exports.verify = (req,res) => {
   const {query} = req
@@ -45,14 +43,4 @@ module.exports.verify = (req,res) => {
         })
       }
     });
-}
-
-module.exports.coba = (req,res) =>{
-  console.log('msk');
-  io.on('connection',(socket) => {
-    console.log('connect');
-    socket.emit('msg','demo')
-  })
-  io.listen(8001);
-
 }

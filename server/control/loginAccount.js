@@ -1,5 +1,5 @@
- var Account = require('../models/accountmodel');
- var AccountSession = require('../models/accountsessionmodel');
+ const Account = require('../models/accountmodel');
+ const AccountSession = require('../models/accountsessionmodel');
 
 module.exports.login = (req,res) => {
   const { body } = req;

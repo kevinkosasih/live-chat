@@ -41,11 +41,10 @@ app.get('/getdata',loginAccount.dataToken)
 app.post('/regisnew',regisAccount.newRegis)
 app.get('/logout',logoutAccount.logout)
 app.get('/verify',verify.verify)
-app.get('/try',verify.coba)
 
 //port API (can be change)
 const port = 3001;
-//API hosted @ port
+//openconnection for socket.io
 io.on('connection', (client) => {
   console.log("connected");
   client.on('sendChat', (message) => {
@@ -54,6 +53,7 @@ io.on('connection', (client) => {
   });
 });
 io.listen(8000);
+//API hosted @ port
 app.listen(port, () => {
   console.log('Server start at '+port);
 });

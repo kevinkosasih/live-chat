@@ -1,4 +1,4 @@
-var AccountSession = require('../models/accountsessionmodel');
+const AccountSession = require('../models/accountsessionmodel');
 
 module.exports.logout = (req,res) => {
   const {query} = req

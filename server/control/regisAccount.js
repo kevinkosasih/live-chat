@@ -1,4 +1,4 @@
-var Account = require('../models/accountmodel');
+const Account = require('../models/accountmodel');
 
 module.exports.newRegis= (req,res) => {
   const { body } = req;
