@@ -5,7 +5,6 @@ module.exports.addFriends = (req,res) =>{
   const {body,query} = req;
   const {
     friendlist,
-    username
   } = body;
 
   const {token} = query
