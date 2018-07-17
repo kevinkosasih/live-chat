@@ -69,9 +69,8 @@ module.exports.newRegis= (req,res) => {
     }
 
     const newAccount = new Account({
-      listFollower:[],
-      listFollowing:[],
-      listPost :[]
+      friends:[],
+      chatList:[],
     });
 
     newAccount.username = username

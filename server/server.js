@@ -25,7 +25,8 @@ const config = require('./config/database');
 mongoose.connect(config.database);
 // validate connection to mongoDB
 mongoose.connection.on('connected',() => {
-  console.log('Connected to '+config.database);
+  console.log('Connected to '+config.database)
+  console.log(Date.now());
 })
 mongoose.connection.on('error',(err) => {
   console.log('Database error '+err);
@@ -55,7 +56,7 @@ io.on('connection', (client) => {
 io.listen(8000);
 //API hosted @ port
 app.listen(port, () => {
-  console.log('Server start at '+port);
+  console.log('Server start at '+port)
 });
 
 module.exports = app;
