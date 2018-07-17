@@ -1,4 +1,4 @@
-const ChatHistory = require('../model/chathistorymodel')
+const ChatHistory = require('../models/chathistorymodel')
 
 module.exports.savechat = (req,res) =>{
   const{body} = req;
@@ -8,7 +8,7 @@ module.exports.savechat = (req,res) =>{
     sender,
     time
   }=body;
-
+  console.log(body);
   if(!chatId){
     return res.send({
       success:false,
@@ -31,4 +31,26 @@ module.exports.savechat = (req,res) =>{
       message:'Error: cannot be blank'
     })
   }
+
+  const newChatHistory = new ChatHistory();
+
+  newChatHistory.chatId = chatId;
+  newChatHistory.message = message;
+  newChatHistory.sender = sender;
+  newChatHistory.time = time;
+
+  console.log(newChatHistory);
+  // newChatHistory.save((err) =>{
+  //   if(err){
+  //     return res.send({
+  //       success:false,
+  //       message:'Error: server error'
+  //     })
+  //   }
+  //
+  //   return res.send({
+  //     success:true,
+  //     message:'Message sent'
+  //   })
+  // })
 };

@@ -15,6 +15,11 @@ const AccountModel = mongoose.Schema({
   }],
   chatList:[{
     chatid:{type:String},
+  }],
+  blacklist:[{
+    id:{type:String},
+    username:{type:String},
+    name:{type:String}
   }]
 })
 AccountModel.methods.generateHash = function(password) {

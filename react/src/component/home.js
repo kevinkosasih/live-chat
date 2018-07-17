@@ -95,8 +95,23 @@ class Home extends Component{
    }
    onSend(e){
      e.preventDefault()
-     var recive = ' '
      if(this.state.chat){
+
+     fetch('http://10.183.28.154:3001/chat',{
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json'
+       },
+       body: JSON.stringify({
+         message:this.state.chat,
+         sender: this.state.account.username
+       }),
+     })
+      .then(res => res.json())
+      .then(json =>{
+        console.log(json);
+      })
+     var recive = ' '
        if(this.state.account.username === 'keke'){
        recive = "kevin"
        }

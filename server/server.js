@@ -26,7 +26,6 @@ mongoose.connect(config.database);
 // validate connection to mongoDB
 mongoose.connection.on('connected',() => {
   console.log('Connected to '+config.database)
-  console.log(Date.now());
 })
 mongoose.connection.on('error',(err) => {
   console.log('Database error '+err);
@@ -36,13 +35,15 @@ const loginAccount  = require('./control/loginAccount')
 const regisAccount = require('./control/regisAccount')
 const logoutAccount = require('./control/logoutAccount')
 const verify = require('./control/verify')
+const chathitory = require('./control/chathistory')
+
 //routing API
 app.post('/login',loginAccount.login)
 app.get('/getdata',loginAccount.dataToken)
 app.post('/regisnew',regisAccount.newRegis)
 app.get('/logout',logoutAccount.logout)
 app.get('/verify',verify.verify)
-
+app.post('/chat',chathitory.savechat)
 //port API (can be change)
 const port = 3001;
 //openconnection for socket.io
