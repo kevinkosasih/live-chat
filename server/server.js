@@ -44,6 +44,7 @@ app.post('/regisnew',regisAccount.newRegis)
 app.get('/logout',logoutAccount.logout)
 app.get('/verify',verify.verify)
 app.post('/chat',chathitory.savechat)
+app.post('/addchatroom',chathitory.newchatroom)
 //port API (can be change)
 const port = 3001;
 //openconnection for socket.io

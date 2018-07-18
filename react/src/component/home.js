@@ -96,7 +96,6 @@ class Home extends Component{
    onSend(e){
      e.preventDefault()
      if(this.state.chat){
-
      fetch('http://10.183.28.154:3001/chat',{
        method: 'POST',
        headers: {

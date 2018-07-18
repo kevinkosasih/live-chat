@@ -1,4 +1,5 @@
-const ChatHistory = require('../models/chathistorymodel')
+const ChatHistory = require('../models/chathistorymodel');
+const Account = require('../models/accountmodel');
 
 module.exports.savechat = (req,res) =>{
   const{body} = req;
@@ -39,7 +40,6 @@ module.exports.savechat = (req,res) =>{
   newChatHistory.sender = sender;
   newChatHistory.time = time;
 
-  console.log(newChatHistory);
   // newChatHistory.save((err) =>{
   //   if(err){
   //     return res.send({
@@ -53,4 +53,50 @@ module.exports.savechat = (req,res) =>{
   //     message:'Message sent'
   //   })
   // })
+};
+
+module.exports.newchatroom = (req,res) =>{
+  const{body} = req;
+  const{
+    chatid,
+    user
+  } = body;
+  Account.find({
+    $or:[{username:user[0]},{username:user[1]}]
+  },{_id:0,password:0,email:0,registerDate:0},(err,result)=>{
+    if(result.length != 2){
+      return res.send({
+        success:false,
+        message:"Error: User didn't exists"
+      })
+    }
+    else{
+      let user1 = result[0].chatList.concat({chatId:chatid})
+      let user2 = result[1].chatList.concat({chatId:chatid})
+      Account.findOneAndUpdate({username:result[0].username},
+      {$set:{chatList:user1}},null,(err,ress)=>{
+        if (err) {
+          console.log(err);
+          return res.send({
+            success: false,
+            message: 'Error: Server error'
+          });
+        }
+      })
+      Account.findOneAndUpdate({username:result[1].username},
+      {$set:{chatList:user2}},null,(err,ress)=>{
+        if (err) {
+          console.log(err);
+          return res.send({
+            success: false,
+            message: 'Error: Server error'
+          });
+        }
+      })
+      return res.send({
+        success:true,
+        message:'Success'
+      })
+    }
+  })
 };
