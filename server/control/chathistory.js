@@ -61,9 +61,27 @@ module.exports.newchatroom = (req,res) =>{
     chatid,
     user
   } = body;
+  if(!chatId){
+    return res.send({
+      success:false,
+      message:'Error: chatid cannot be blank'
+    })
+  }
+  if(!user){
+    return res.send({
+      success:false,
+      message:'Error: user cannot be blank'
+    })
+  }
   Account.find({
     $or:[{username:user[0]},{username:user[1]}]
   },{_id:0,password:0,email:0,registerDate:0},(err,result)=>{
+    if(err){
+      return res.send({
+        success:false,
+        message:'Error: Server error'
+      })
+    }
     if(result.length != 2){
       return res.send({
         success:false,
@@ -71,8 +89,8 @@ module.exports.newchatroom = (req,res) =>{
       })
     }
     else{
-      let user1 = result[0].chatList.concat({chatId:chatid})
-      let user2 = result[1].chatList.concat({chatId:chatid})
+      let user1 = result[0].chatList.concat({chatId:chatid,username:result[1].username,name:result[1].name})
+      let user2 = result[1].chatList.concat({chatId:chatid,username:result[0].username,name:result[0].name})
       Account.findOneAndUpdate({username:result[0].username},
       {$set:{chatList:user1}},null,(err,ress)=>{
         if (err) {
