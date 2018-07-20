@@ -9,7 +9,6 @@ const AccountModel = mongoose.Schema({
   description:{type:String,default:''},
   registerDate:{type:Date,require:true,default:Date.now()},
   friends:[{
-    id:{type:String},
     username:{type:String},
     name:{type:String}
   }],
@@ -19,7 +18,6 @@ const AccountModel = mongoose.Schema({
     name:{type:String}
   }],
   blacklist:[{
-    id:{type:String},
     username:{type:String},
     name:{type:String}
   }]

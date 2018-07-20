@@ -40,19 +40,19 @@ module.exports.savechat = (req,res) =>{
   newChatHistory.sender = sender;
   newChatHistory.time = time;
 
-  // newChatHistory.save((err) =>{
-  //   if(err){
-  //     return res.send({
-  //       success:false,
-  //       message:'Error: server error'
-  //     })
-  //   }
-  //
-  //   return res.send({
-  //     success:true,
-  //     message:'Message sent'
-  //   })
-  // })
+  newChatHistory.save((err) =>{
+    if(err){
+      return res.send({
+        success:false,
+        message:'Error: server error'
+      })
+    }
+
+    return res.send({
+      success:true,
+      message:'Message sent'
+    })
+  })
 };
 
 module.exports.newchatroom = (req,res) =>{
@@ -113,7 +113,8 @@ module.exports.newchatroom = (req,res) =>{
       })
       return res.send({
         success:true,
-        message:'Success'
+        message:'Success',
+        chatId:chatid
       })
     }
   })

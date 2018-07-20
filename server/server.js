@@ -30,21 +30,24 @@ mongoose.connection.on('connected',() => {
 mongoose.connection.on('error',(err) => {
   console.log('Database error '+err);
 })
+
 //import controller
 const loginAccount  = require('./control/loginAccount')
 const regisAccount = require('./control/regisAccount')
 const logoutAccount = require('./control/logoutAccount')
 const verify = require('./control/verify')
 const chathitory = require('./control/chathistory')
-
+const addFriends = require('./control/addfriend')
 //routing API
-app.post('/login',loginAccount.login)
 app.get('/getdata',loginAccount.dataToken)
-app.post('/regisnew',regisAccount.newRegis)
 app.get('/logout',logoutAccount.logout)
 app.get('/verify',verify.verify)
+app.post('/login',loginAccount.login)
+app.post('/regisnew',regisAccount.newRegis)
 app.post('/chat',chathitory.savechat)
-app.post('/addchatroom',chathitory.newchatroom)
+app.put('/Friends', addFriends.addFriends)
+app.put('/addchatroom',chathitory.newchatroom)
+
 //port API (can be change)
 const port = 3001;
 //openconnection for socket.io
@@ -55,6 +58,7 @@ io.on('connection', (client) => {
     client.emit(message.sender,{message,send:0});
   });
 });
+// port for socket.io (can be change || cannot same with port app)
 io.listen(8000);
 //API hosted @ port
 app.listen(port, () => {
