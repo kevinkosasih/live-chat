@@ -15,7 +15,7 @@ export default class HeaderChat extends React.Component{
             <Modal.Content image>
               <Image wrapped size='medium' src={profileImage} />
               <Modal.Description>
-                <p>This is selena</p>
+                <p>This is Mariah</p>
               </Modal.Description>
             </Modal.Content>
           </Modal>
