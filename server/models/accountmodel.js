@@ -8,9 +8,18 @@ const AccountModel = mongoose.Schema({
   name:{type:String,require:true,default:''},
   description:{type:String,default:''},
   registerDate:{type:Date,require:true,default:Date.now()},
-  friend:[{
-    id:{type:String},
-    username:{type:String}
+  friends:[{
+    username:{type:String},
+    name:{type:String}
+  }],
+  chatList:[{
+    chatId:{type:String},
+    username:{type:String},
+    name:{type:String}
+  }],
+  blacklist:[{
+    username:{type:String},
+    name:{type:String}
   }]
 })
 AccountModel.methods.generateHash = function(password) {

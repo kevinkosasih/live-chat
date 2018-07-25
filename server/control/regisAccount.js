@@ -1,4 +1,4 @@
-var Account = require('../models/accountmodel');
+const Account = require('../models/accountmodel');
 
 module.exports.newRegis= (req,res) => {
   const { body } = req;
@@ -69,9 +69,8 @@ module.exports.newRegis= (req,res) => {
     }
 
     const newAccount = new Account({
-      listFollower:[],
-      listFollowing:[],
-      listPost :[]
+      friends:[],
+      chatList:[],
     });
 
     newAccount.username = username
