@@ -10,6 +10,8 @@ module.exports.savechat = (req,res) =>{
     time
   }=body;
   console.log(body);
+  let adsf = new ChatHistory();
+  console.log(adsf.encrypt(message,'asdodw'));
   if(!chatId){
     return res.send({
       success:false,
@@ -36,7 +38,7 @@ module.exports.savechat = (req,res) =>{
   const newChatHistory = new ChatHistory();
 
   newChatHistory.chatId = chatId;
-  newChatHistory.message = message;
+  newChatHistory.message = newChatHistory.encrypt(message);
   newChatHistory.sender = sender;
   newChatHistory.time = time;
 
@@ -119,3 +121,20 @@ module.exports.newchatroom = (req,res) =>{
     }
   })
 };
+
+module.exports.getchat = (req,res) =>{
+  const {query} = req;
+  const {
+    token
+  }=query;
+
+  ChatHistory.find({chatId:token},(err,chat)=>{
+    if(err){
+      return res.send({
+        success:false,
+        message:'Error: Server error'
+      })
+    }
+
+  })
+}
