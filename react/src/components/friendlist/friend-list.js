@@ -1,9 +1,7 @@
 import React from 'react';
 import '../../App.css';
-import FontAwesome from 'react-fontawesome';
 
-import MenuFriendList from './menu-friend-list';
-import {Route, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 export default class FriendList extends React.Component{
   constructor(props){

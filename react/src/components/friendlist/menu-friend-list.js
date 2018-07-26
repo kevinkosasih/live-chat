@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Menu, Segment } from 'semantic-ui-react';
 
 import '../../App.css';
 import FriendList from './friend-list';

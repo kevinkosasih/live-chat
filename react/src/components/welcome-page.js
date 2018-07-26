@@ -1,7 +1,8 @@
 import React from 'react';
 import '../App.css';
-import {Button , Segment} from 'mdbreact';
+import {Button } from 'mdbreact';
 import {Link} from 'react-router-dom';
+
 class WelcomePage extends React.Component{
   render (){
     return (
