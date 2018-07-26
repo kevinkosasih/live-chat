@@ -1,9 +1,7 @@
 import React from 'react';
 import '../../App.css';
 
-import {Image, Modal} from 'semantic-ui-react';
-import profile from '../../picture/muka.jpg';
-
+import { Modal} from 'semantic-ui-react';
 
 export default class AddFriend extends React.Component{
 
