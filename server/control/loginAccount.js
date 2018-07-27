@@ -80,6 +80,12 @@ module.exports.dataToken = (req,res) =>{
         message: 'Error: Server error'
       });
     }
+    if(data.length != 1){
+      return res.send({
+        success: false,
+        message: 'Error: '
+      });
+    }
     Account.find({
       _id:data[0].accountid
     },{password:0,_id:0},(err,account)=>{
