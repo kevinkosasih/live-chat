@@ -13,6 +13,7 @@ export default class inputMessage extends React.Component{
     }
 
     this.messageOnChange =this.messageOnChange.bind(this);
+    this.onSend =this.onSend.bind(this);
   }
 
   messageOnChange(e){
@@ -23,14 +24,20 @@ export default class inputMessage extends React.Component{
 
   onSend(e){
     e.preventDefault();
-    sendChat(this.state.messageS)
+    if(!this.state.message){
+      this.setState({
+        message:''
+      })
+    }
   }
 
   render(){
     return(
       <div className = "footer-app">
         <div className = "inputBarMessage">
-          <input type = "text" className = "message" placeholder="type a message . . ." value={this.state.message} onChange={this.messageOnChange}/>
+          <form onSubmit={this.onSend}>
+            <input type = "text" className = "message" placeholder="type a message . . ." value={this.state.message} onChange={this.messageOnChange}/>
+          </form>
         </div>
       </div>
     );
