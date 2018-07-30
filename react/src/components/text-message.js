@@ -6,7 +6,9 @@ export default class inputMessage extends React.Component{
     return(
       <div className = "footer-app">
         <div className = "inputBarMessage">
+          <form>
           <input type = "text" className = "message" placeholder="type a message . . ."/>
+          </form>
         </div>
       </div>
     );

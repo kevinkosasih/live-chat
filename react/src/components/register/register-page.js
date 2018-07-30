@@ -9,12 +9,12 @@ class RegisterForm extends React.Component{
     super (props);
 
     this.state = {
-      firstName : '',
-      lastName: '',
+      id : '',
       email:'',
       password:'',
       retypePassword:'',
-      formErrors: {email:'',password:''},
+      formErrors: {id:'',email:'',password:''},
+      idValid : false,
       emailValid : false,
       passwordValid: false,
       retypePasswordValid :false
@@ -32,10 +32,16 @@ class RegisterForm extends React.Component{
 
   validateField (fieldName, value) {
     let fieldValidationErrors = this.state.formErrors;
+    let idValid = this.state.idValid;
     let emailValid = this.state.emailValid;
     let passwordValid = this.state.passwordValid;
+    let retypePasswordValid = this.state.retypePasswordValid;
 
     switch(fieldName) {
+      case 'id':
+        idValid = value.length >= 5;
+        fieldValidationErrors.id = idValid ? '' : ' must 5 character minimum';
+        break;
       case 'email':
         emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
         fieldValidationErrors.email = emailValid ? '' : ' is invalid';
@@ -44,17 +50,31 @@ class RegisterForm extends React.Component{
         passwordValid = value.length >= 6;
         fieldValidationErrors.password = passwordValid ? '': ' is too short';
         break;
+      case 'retypePassword':
+        retypePasswordValid = value.length >= 6;
+        fieldValidationErrors.password = retypePasswordValid ? '': ' did not match';
+        break;
       default:
         break;
     }
     this.setState({formErrors: fieldValidationErrors,
+                    idValid : idValid,
                     emailValid: emailValid,
-                    passwordValid: passwordValid
+                    passwordValid: passwordValid,
+                    retypePasswordValid : retypePasswordValid
                   }, this.validateForm);
   }
 
   validateForm (){
-    this.setState({formValid: this.state.emailValid && this.state.passwordValid});
+    this.setState(
+      {
+        formValid:
+        this.state.idValid &&
+        this.state.emailValid &&
+        this.state.passwordValid &&
+        this.state.retypePasswordValid
+      }
+    );
   }
 
   render(){
@@ -68,6 +88,16 @@ class RegisterForm extends React.Component{
             <div className = "login-position">
               <h3><b>Hoo Hoo</b></h3>
             </div>
+            <Form.Field>
+              <label>ID</label>
+              <input
+                placeholder='ID'
+                type ='text'
+                name = 'id'
+                value = {this.state.id}
+                onChange = {this.handleUserInput}
+              />
+            </Form.Field>
             <Form.Field>
               <label>First Name</label>
               <input placeholder='First Name' />
@@ -83,7 +113,8 @@ class RegisterForm extends React.Component{
                 type ='email'
                 name = 'email'
                 value = {this.state.email}
-                onChange = {this.handleUserInput} />
+                onChange = {this.handleUserInput}
+              />
             </Form.Field>
             <Form.Field>
               <label>Password</label>
@@ -92,11 +123,18 @@ class RegisterForm extends React.Component{
                 type ='password'
                 name = 'password'
                 value = {this.state.password}
-                onChange = {this.handleUserInput}/>
+                onChange = {this.handleUserInput}
+              />
             </Form.Field>
             <Form.Field>
               <label>Re-type Password</label>
-              <input placeholder ="Re-type Password" type='password' />
+              <input
+                placeholder ="Re-type Password"
+                type = 'password'
+                name = 'retypePassword'
+                value = {this.state.retypePassword}
+                onChange = {this.handleUserInput}
+              />
             </Form.Field>
             <Form.Field>
               <Checkbox label='I agree to the Terms and Conditions' />
