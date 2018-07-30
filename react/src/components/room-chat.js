@@ -7,6 +7,10 @@ import MenuFriendList from'./friendlist/menu-friend-list';
 import HeaderChat from './header-roomchat/header';
 import Content from './content';
 import {Route} from 'react-router-dom';
+import {
+  getFromStorage,
+  setInStorage
+} from '../token/storage';
 
 export default class RoomChat extends React.Component{
   constructor(props){
@@ -16,6 +20,26 @@ export default class RoomChat extends React.Component{
       search : '',
       isOpen : false
     }
+  }
+
+  componentDidMount(){
+    const obj = getFromStorage('http://localhost:3000');
+     if (obj && obj.token) {
+       fetch('http://10.183.28.154:3001/getdata?token='+obj.token)
+       .then(res => res.json())
+       .then(json => {
+         this.setState({
+           account:json.akun,
+           isLoading:false
+         })
+       })
+     } else {
+       setInStorage('http://localhost:3000',null)
+       this.setState({
+         isLoading: false,
+       });
+       this.props.history.push('/')
+     }
   }
 
   openChatRoom = (title) => {
@@ -50,6 +74,7 @@ export default class RoomChat extends React.Component{
                 <Profile
                   togglePopup = {this.togglePopup}
                   isOpen = {this.state.isOpen}
+                  history = {this.props.history}
                 />
                 <div className = "searchBarContent">
                   <SearchFriend

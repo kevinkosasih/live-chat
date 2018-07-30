@@ -30,7 +30,15 @@ import setting from '../../picture/menu.png';
      return(
       <div className = "profile-container">
         <div className = "profile-picture-position">
-          <Modal trigger={<img src={profile} className ="profileImage" alt=""/>} centered={false}>
+          <Modal
+            trigger={
+              <div>
+                <img src={profile} className ="profileImage" alt=""/>
+                <b>Selena</b>
+              </div>
+            }
+            centered={false}
+          >
             <Modal.Header>Selena</Modal.Header>
             <Modal.Content image>
               <Image wrapped size='medium' src={profile} alt="" />
@@ -46,7 +54,8 @@ import setting from '../../picture/menu.png';
         {this.state.isOpen ?
           <AddFriend
             modal = {this.state.showPopup}
-            click = {this.handleClose}/>
+            click = {this.handleClose}
+            history = {this.props.history}/>
           : <AddFriend/>}
       </div>
      );
