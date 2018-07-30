@@ -83,7 +83,7 @@ class RegisterForm extends React.Component{
         <div className ="formRegister">
           <Form className = "formModal">
             <div className = "logo-position">
-              <img src = {logo} className = "logo"/>
+              <img src = {logo} className = "logo" alt=""/>
             </div>
             <div className = "login-position">
               <h3><b>Hoo Hoo</b></h3>

@@ -13,7 +13,7 @@ export default class SearchFriend extends React.Component{
           placeholder = "Search or start new chat"
           value = {this.props.search}
           onChange = {this.props.onChange}/>
-        <img src = {icon}/>
+        <img src = {icon} alt=""/>
       </div>
     );
   }

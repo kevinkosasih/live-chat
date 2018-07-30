@@ -25,38 +25,44 @@ const config = require('./config/database');
 mongoose.connect(config.database);
 // validate connection to mongoDB
 mongoose.connection.on('connected',() => {
-  console.log('Connected to '+config.database);
+  console.log('Connected to '+config.database)
 })
 mongoose.connection.on('error',(err) => {
   console.log('Database error '+err);
 })
+
 //import controller
 const loginAccount  = require('./control/loginAccount')
 const regisAccount = require('./control/regisAccount')
 const logoutAccount = require('./control/logoutAccount')
 const verify = require('./control/verify')
+const chathitory = require('./control/chathistory')
+const addFriends = require('./control/addfriend')
 //routing API
-app.post('/login',loginAccount.login)
 app.get('/getdata',loginAccount.dataToken)
-app.post('/regisnew',regisAccount.newRegis)
 app.get('/logout',logoutAccount.logout)
 app.get('/verify',verify.verify)
-app.get('/try',verify.coba)
+app.post('/login',loginAccount.login)
+app.post('/regisnew',regisAccount.newRegis)
+app.post('/chat',chathitory.savechat)
+app.put('/Friends', addFriends.addFriends)
+app.put('/addchatroom',chathitory.newchatroom)
 
 //port API (can be change)
 const port = 3001;
-//API hosted @ port
+//openconnection for socket.io
 io.on('connection', (client) => {
   console.log("connected");
   client.on('sendChat', (message) => {
-    console.log(message);
-    client.broadcast.emit(message.reciever,message);
-    client.emit(message.sender,message);
+    client.broadcast.emit(message.reciever,{message,send:1});
+    client.emit(message.sender,{message,send:0});
   });
 });
+// port for socket.io (can be change || cannot same with port app)
 io.listen(8000);
+//API hosted @ port
 app.listen(port, () => {
-  console.log('Server start at '+port);
+  console.log('Server start at '+port)
 });
 
 module.exports = app;

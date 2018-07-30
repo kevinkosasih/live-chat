@@ -1,5 +1,5 @@
- var Account = require('../models/accountmodel');
- var AccountSession = require('../models/accountsessionmodel');
+ const Account = require('../models/accountmodel');
+ const AccountSession = require('../models/accountsessionmodel');
 
 module.exports.login = (req,res) => {
   const { body } = req;
@@ -78,6 +78,12 @@ module.exports.dataToken = (req,res) =>{
       return res.send({
         success: false,
         message: 'Error: Server error'
+      });
+    }
+    if(data.length != 1){
+      return res.send({
+        success: false,
+        message: 'Error: '
       });
     }
     Account.find({

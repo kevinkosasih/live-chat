@@ -1,16 +1,36 @@
 import React from 'react';
 import '../../App.css';
 
-import {Image, Modal} from 'semantic-ui-react';
-import profile from '../../picture/muka.jpg';
+import { Modal} from 'semantic-ui-react';
 
+import {
+  setInStorage,
+  getFromStorage
+}from '../../token/storage'
 
 export default class AddFriend extends React.Component{
+  constructor(props){
+    super(props);
 
-  toggleSettingButton(){
-
+    this.logout = this.logout.bind(this)
   }
-
+  logout(e) {
+    e.preventDefault()
+     const obj = getFromStorage('http://localhost:3000');
+     if (obj && obj.token) {
+       const { token } = obj;
+       // Verify token
+       fetch('http://10.183.28.154:3001/logout?token=' + token)
+         .then(res => res.json())
+         .then(json => {
+           if (json.success) {
+             setInStorage('http://localhost:3000', null)
+             this.props.history.push('/LoginForm')
+           }
+          }
+        );
+     }
+   }
   render(){
     return(
       <div className = {"popup-container "+ this.props.modal}>
@@ -23,7 +43,7 @@ export default class AddFriend extends React.Component{
             </Modal.Description>
           </Modal.Content>
         </Modal>
-        <li>Log Out</li>
+        <li onClick={this.logout}>Log Out</li>
       </div>
     );
   }
