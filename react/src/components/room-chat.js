@@ -38,7 +38,7 @@ export default class RoomChat extends React.Component{
        this.setState({
          isLoading: false,
        });
-       this.props.history.push('/')
+       // this.props.history.push('/')
      }
   }
 
@@ -59,7 +59,7 @@ export default class RoomChat extends React.Component{
     const rightColumn = ({match}) => (
       <div className = "right-column">
         <HeaderChat name={match.params.name}/>
-        <Content/>
+        <Content history={this.props.history}/>
         <Message/>
       </div>
     )

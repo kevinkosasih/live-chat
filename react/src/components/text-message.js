@@ -13,6 +13,7 @@ export default class inputMessage extends React.Component{
     }
 
     this.messageOnChange =this.messageOnChange.bind(this);
+    this.onSend =this.onSend.bind(this);
   }
 
   messageOnChange(e){
@@ -23,7 +24,11 @@ export default class inputMessage extends React.Component{
 
   onSend(e){
     e.preventDefault();
-    sendChat(this.state.messageS)
+    if(!this.state.message){
+      this.setState({
+        message:''
+      })
+    }
   }
 
   render(){
