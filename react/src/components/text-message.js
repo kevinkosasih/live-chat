@@ -30,7 +30,7 @@ export default class inputMessage extends React.Component{
     return(
       <div className = "footer-app">
         <div className = "inputBarMessage">
-          <form>
+          <form onSubmit={this.onSend}>
             <input type = "text" className = "message" placeholder="type a message . . ." value={this.state.message} onChange={this.messageOnChange}/>
           </form>
         </div>
