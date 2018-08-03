@@ -22,11 +22,9 @@ import setting from '../../picture/menu.png';
         }
       )
     )
-    console.log(this.state.isOpen);
   }
 
    render(){
-     console.log("ini state yang profile: "+this.state.isOpen);
      return(
       <div className = "profile-container">
         <div className = "profile-picture-position">
@@ -34,16 +32,16 @@ import setting from '../../picture/menu.png';
             trigger={
               <div>
                 <img src={profile} className ="profileImage" alt=""/>
-                <b>Selena</b>
+                <b>{this.props.name}</b>
               </div>
             }
             centered={false}
           >
-            <Modal.Header>Selena</Modal.Header>
+            <Modal.Header>{this.props.name}</Modal.Header>
             <Modal.Content image>
               <Image wrapped size='medium' src={profile} alt="" />
               <Modal.Description>
-                <p>This is selena</p>
+                <p>This is {this.props.name}</p>
               </Modal.Description>
             </Modal.Content>
           </Modal>

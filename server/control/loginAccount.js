@@ -1,5 +1,11 @@
  const Account = require('../models/accountmodel');
  const AccountSession = require('../models/accountsessionmodel');
+ const crypto = require('crypto')
+ const algorithm = 'aes-256-ctr'
+ const KeyCookies = "setCookiesTokenChatApp"
+ const btoa = require('btoa')
+ const atob = require('atob')
+
 
 module.exports.login = (req,res) => {
   const { body } = req;
@@ -7,7 +13,6 @@ module.exports.login = (req,res) => {
     username,
     password
   } = body;
-
   if (!username) {
       return res.send({
         success: false,
@@ -30,7 +35,6 @@ module.exports.login = (req,res) => {
         message: 'Error: Server error'
       });
     }
-
     if(currentAccount.length != 1){
       return res.send({
         success: false,
@@ -50,11 +54,21 @@ module.exports.login = (req,res) => {
     session.accountid = user._id;
     session.timestamp = Date.now()
     session.deleted =Date.now()
-
     session.save((err,doc) => {
       if(err){
         res.send(err)
       }
+      const data  = JSON.stringify({
+        userid:doc.accountid,
+        token:doc._id
+      })
+      var cipher = crypto.createCipher(algorithm,KeyCookies)
+      var crypted = cipher.update(data,'utf8','hex')
+      crypted += cipher.final('hex');
+      const encryptBtoa = btoa(crypted)
+
+      const expDate = new Date(Date.now()+(1000*60*60*24))
+      res.cookie('Token',encryptBtoa,{expires:expDate,httpOnly: true})
       return res.send({
         success: true,
         message: 'Logged in',
@@ -66,11 +80,23 @@ module.exports.login = (req,res) => {
 }
 
 module.exports.dataToken = (req,res) =>{
-  const {query} = req;
-  const {token} = query;
+  const {headers} = req;
+  const {cookie} = headers
+  let getcookie  = cookie.split(";")
+  let getToken = []
+  for(var i=0;i<getcookie.length;i++){
+    getToken = getcookie[i].split("=")
+    if(getToken[0] == "Token"){
+      break;
+    }
+  }
+  let decryptAtob = atob(getToken[1])
+  var decipher = crypto.createDecipher(algorithm,KeyCookies)
+  var decrypted = decipher.update(decryptAtob,'hex','utf8')
+  decrypted += decipher.final('utf8');
 
   AccountSession.find({
-    _id:token,
+    _id:JSON.parse(decrypted).token,
     isDeleted:false
   },(err,data) =>{
     if (err) {
@@ -97,10 +123,10 @@ module.exports.dataToken = (req,res) =>{
         });
       }
       return res.send({
+        success:true,
         akun:account[0]
       })
 
     })
   })
-
 }

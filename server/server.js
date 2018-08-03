@@ -8,6 +8,8 @@ const compression = require("compression");
 const helmet = require('helmet')
 const app = express();
 const io = require('socket.io')();
+const cookieParser = require('cookie-parser')
+
 
 app.use(morgan('common'))
 app.use (helmet())
@@ -16,6 +18,7 @@ app.use(cors({origin:'http://10.183.28.154:3000'}));
 
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(cookieParser());
 
 app.use(compression());
 

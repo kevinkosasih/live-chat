@@ -31,6 +31,32 @@ export default class SideNav extends Component {
 
     render() {
         const { renderTab ,Friends, Groups} = this.state
+        //
+        const RenderedContent = ({ searchValue,changeName,tabName }) => {
+            if (tabName === 'Friends') {
+                return FriendsTab(changeName,searchValue)
+            }
+            if (tabName === 'Groups') {
+                return GroupsTab()
+            }
+        }
+        //
+        const FriendsTab = (changeName,searchValue) => (
+            <div className = "menu-friend-list">
+              <FriendList
+                changeName = {changeName}
+                search = {searchValue}
+                friendlist={this.props.friendlist}
+                />
+            </div>
+        )
+        //
+        const GroupsTab = () => (
+            <div className = "menu-group-list">
+              This is the about page
+            </div>
+        )
+        //
         return (
           <div className = "menu-friend-container">
                 <div className = "menu-friend-box">
@@ -51,27 +77,3 @@ export default class SideNav extends Component {
         );
     }
 }
-
-const RenderedContent = ({ searchValue,changeName,tabName }) => {
-    if (tabName === 'Friends') {
-        return Friends(changeName,searchValue)
-    }
-    if (tabName === 'Groups') {
-        return Groups()
-    }
-}
-
-const Friends = (changeName,searchValue) => (
-    <div className = "menu-friend-list">
-      <FriendList
-        changeName = {changeName}
-        search = {searchValue}
-        />
-    </div>
-)
-
-const Groups = () => (
-    <div className = "menu-group-list">
-      This is the about page
-    </div>
-)

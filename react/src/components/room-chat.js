@@ -8,9 +8,8 @@ import HeaderChat from './header-roomchat/header';
 import Content from './content';
 import {Route} from 'react-router-dom';
 import {
-  getFromStorage,
-  setInStorage
-} from '../token/storage';
+  recieveChat
+}from "../socket/socketconnect"
 
 export default class RoomChat extends React.Component{
   constructor(props){
@@ -18,30 +17,42 @@ export default class RoomChat extends React.Component{
     this.state = {
       name : '',
       search : '',
-      isOpen : false
+      isOpen : false,
+      isLoading:true,
+      ulang:[]
     }
+    this.activeSocket= this.activeSocket.bind(this)
+
   }
 
   componentDidMount(){
-    const obj = getFromStorage('http://localhost:3000');
-     if (obj && obj.token) {
-       fetch('http://10.183.28.154:3001/getdata?token='+obj.token)
+       fetch('/getdata',{
+         credentials:'include'
+       })
        .then(res => res.json())
        .then(json => {
-         this.setState({
-           account:json.akun,
-           isLoading:false
-         })
+         if(!json.success){
+           this.props.history.push('/')
+         }
+         else{
+           this.setState({
+             account:json.akun,
+             isLoading:false
+           })
+           for(var i = 0;i<json.akun.friends.length;i++){
+             this.activeSocket(json.akun.friends[i].username)
+           }}
        })
-     } else {
-       setInStorage('http://localhost:3000',null)
-       this.setState({
-         isLoading: false,
-       });
-       // this.props.history.push('/')
-     }
   }
-
+  activeSocket(port){
+    recieveChat(port,(err,recieve)=>{
+      let asd = this.state.ulang.concat(recieve)
+      this.setState({
+        ulang:asd
+      })
+      console.log(this.state.ulang);
+    })
+  }
   openChatRoom = (title) => {
     this.setState({
       name : title
@@ -55,14 +66,25 @@ export default class RoomChat extends React.Component{
   }
 
   render(){
+    const {
+      account,
+      isLoading
+    } = this.state
     const{match} =this.props
     const rightColumn = ({match}) => (
       <div className = "right-column">
         <HeaderChat name={match.params.name}/>
         <Content history={this.props.history}/>
-        <Message/>
+        <Message reciever={match.params.name} sender={account.username}/>
       </div>
     )
+    if(isLoading){
+      return(
+        <div>
+          <p>Loading....</p>
+        </div>
+      )
+    }
     return (
       <div className = "background-top">
         <div className = "container-page">
@@ -75,6 +97,7 @@ export default class RoomChat extends React.Component{
                   togglePopup = {this.togglePopup}
                   isOpen = {this.state.isOpen}
                   history = {this.props.history}
+                  name={account.name}
                 />
                 <div className = "searchBarContent">
                   <SearchFriend
@@ -85,6 +108,7 @@ export default class RoomChat extends React.Component{
                 <MenuFriendList
                   changeName={this.openChatRoom}
                   searchValue = {this.state.search}
+                  friendlist = {account.friends}
                 />
             </div>
           </div>
