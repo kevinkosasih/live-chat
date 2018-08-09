@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import '../../App.css';
 import FriendList from './friend-list';
+import GroupList from '../grouplist/group-list';
 
 export default class SideNav extends Component {
     constructor(props) {
@@ -57,7 +58,7 @@ const RenderedContent = ({ searchValue,changeName,tabName }) => {
         return Friends(changeName,searchValue)
     }
     if (tabName === 'Groups') {
-        return Groups()
+        return Groups(changeName,searchValue)
     }
 }
 
@@ -66,12 +67,15 @@ const Friends = (changeName,searchValue) => (
       <FriendList
         changeName = {changeName}
         search = {searchValue}
-        />
+      />
     </div>
 )
 
-const Groups = () => (
+const Groups = (changeName,searchValue) => (
     <div className = "menu-group-list">
-      This is the about page
+      <GroupList
+        changeName = {changeName}
+        search = {searchValue}
+      />
     </div>
 )

@@ -2,6 +2,11 @@ body{
   background-image: linear-gradient(to bottom, #dddbd1, #d2dbdc);
 }
 
+#root{
+  width: 100%;
+  height: 100%;
+}
+
 .App {
   text-align: center;
   vertical-align: middle;
@@ -31,6 +36,10 @@ body{
   border-radius: 5px;
 }
 
+.formModal p{
+
+}
+
 .logo-position{
   width: 100%;
   text-align: center;
@@ -45,6 +54,14 @@ body{
   text-align: center;
 }
 
+.errorMessage{
+  color: #e38d8d;
+  font-family: arial;
+  font-weight: 520;
+  display: inline-block;
+  float: left;
+}
+
 .buttonForm{
   width: 100%;
   text-align: center;
@@ -54,14 +71,6 @@ body{
 
 .buttonForm:hover{
   background-color: rgba(242, 113, 28, 0.9) !important;
-}
-
-.colorClickHere{
-  color: #222;
-}
-
-.colorClickHere:hover{
-  color :#222;
 }
 
 .background-top{
@@ -82,19 +91,7 @@ body{
   background-color: #ffffff;
 }
 
-.container-chat{
-  height: 100%;
-  width: 100%;
-}
-
-.right-column{
-  width : 100%;
-  height: 100%;
-  float: right;
-  position: relative;
-}
-
-.default-chatroom{
+.rightColumn{
   width : 70%;
   height: 100%;
   float: right;
@@ -174,11 +171,6 @@ body{
   margin-right: 30px;
 }
 
-.friend-list-container{
-  width : 100%;
-  height: 100%;
-}
-
 .profile-container{
   background-image: linear-gradient(to bottom, #f5f2e1, #f7f9f9);
   width: 100%;
@@ -207,6 +199,16 @@ body{
   cursor: pointer;
   display: inline-block;
   margin-right: 10px;
+}
+
+.profileImageClick{
+  width: 50%;
+  height: 60px;
+  float: left;
+}
+
+.profileImageClick b{
+  cursor: pointer;
 }
 
 .setting-icon{
@@ -345,6 +347,36 @@ body{
 }
 
 .friend-list-text li:hover{
+  background-color: rgba(231, 159, 74, 0.4)
+}
+
+.group-list-container{
+  height: calc( 100% - 145px);
+  overflow-y: auto;
+  width: 100%;
+}
+
+.group-list-box{
+  width: 100%;
+  height : 100%;
+  line-height: 30px;
+  position: absolute;
+  height: calc( 100% - 145px);
+  overflow-y: auto;
+}
+
+.group-list-text{
+  font-size: 15px;
+  cursor: pointer;
+  list-style-type: none;
+  color: #222;
+}
+
+.group-list-text li{
+  padding-left: 5px;
+}
+
+.group-list-text li:hover{
   background-color: rgba(231, 159, 74, 0.4)
 }
 

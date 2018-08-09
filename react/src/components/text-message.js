@@ -24,7 +24,7 @@ export default class inputMessage extends React.Component{
 
   onSend(e){
     e.preventDefault();
-    if(!this.state.message){
+    if(this.state.message){
       this.setState({
         message:''
       })
