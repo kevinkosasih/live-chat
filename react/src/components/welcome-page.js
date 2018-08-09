@@ -8,14 +8,10 @@ class WelcomePage extends React.Component{
     fetch('/verify',{
       credentials:'include'
     })
+     .then(res => res.json())
      .then(json => {
        if(json.success){
           this.props.history.push('/ChatRoom')
-       }
-       else{
-         this.setState({
-           isLoading:false
-         })
        }
      })
   }

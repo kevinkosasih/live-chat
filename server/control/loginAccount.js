@@ -59,7 +59,6 @@ module.exports.login = (req,res) => {
         res.send(err)
       }
       const data  = JSON.stringify({
-        userid:doc.accountid,
         token:doc._id
       })
       var cipher = crypto.createCipher(algorithm,KeyCookies)
@@ -82,6 +81,10 @@ module.exports.login = (req,res) => {
 module.exports.dataToken = (req,res) =>{
   const {headers} = req;
   const {cookie} = headers
+  // console.log(res.socket);
+  res.socket.on('connection',(asd) =>{
+    console.log("infnii");
+  })
   let getcookie  = cookie.split(";")
   let getToken = []
   for(var i=0;i<getcookie.length;i++){
@@ -122,6 +125,16 @@ module.exports.dataToken = (req,res) =>{
           message: 'Error: Server error'
         });
       }
+      const data  = JSON.stringify({
+        token:JSON.parse(decrypted).token
+      })
+      var cipher = crypto.createCipher(algorithm,KeyCookies)
+      var crypted = cipher.update(data,'utf8','hex')
+      crypted += cipher.final('hex');
+      const encryptBtoa = btoa(crypted)
+
+      const expDate = new Date(Date.now()+(1000*60*60*24))
+      res.cookie('Token',encryptBtoa,{expires:expDate,httpOnly: true})
       return res.send({
         success:true,
         akun:account[0]

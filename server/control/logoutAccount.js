@@ -37,6 +37,7 @@ module.exports.logout = (req,res) => {
           message: 'Error: Server error'
         });
       }
+      res.clearCookie("Token")
       return res.send({
         success: true,
         message: 'Good'
