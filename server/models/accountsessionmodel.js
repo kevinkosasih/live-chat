@@ -6,5 +6,8 @@ const AccountSessionModel = mongoose.Schema({
   isDeleted:{type:Boolean, default: false},
   deleted:{type:Date, default:Date.now()}
 })
-
+AccountSessionModel.methods.key = function(){
+  const pass = 'keyEncryptionToken'
+  return pass
+}
 module.exports = mongoose.model('AccountSessionModel', AccountSessionModel)

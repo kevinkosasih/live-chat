@@ -8,7 +8,7 @@ class App extends Component {
     return(
       <div className="App">
         <center>
-          <WelcomePage/>
+          <WelcomePage history={this.props.history}/>
         </center>
       </div>
     );

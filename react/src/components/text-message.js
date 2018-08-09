@@ -25,6 +25,12 @@ export default class inputMessage extends React.Component{
   onSend(e){
     e.preventDefault();
     if(this.state.message){
+      let send = {
+        reciever:this.props.sender,
+        sender:this.props.reciever,
+        message:this.state.message
+      }
+      sendChat(send)
       this.setState({
         message:''
       })

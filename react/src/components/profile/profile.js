@@ -25,6 +25,7 @@ import setting from '../../picture/menu.png';
   }
 
    render(){
+
      console.log("ini isOpen yang profile: "+this.state.isOpen);
      console.log("ini showPopup yang profile: "+this.state.showPopup);
      return(
