@@ -238,11 +238,11 @@ export default class FriendList extends React.Component{
     );
 
     return(
-        <div className = "friend-list-container">
-          <div className="friend-list-box">
-            <div className="friend-list-text">
+        <div className = "group-list-container">
+          <div className="group-list-box">
+            <div className="group-list-text">
               {filteredList.map((item) => (
-                      <li className = "friend-list-text" key={item.id}
+                      <li className = "group-list-text" key={item.id}
                         onClick={() =>
                           this.props.changeName(item.title)
                         }

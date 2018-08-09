@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../App.css';
 
-import { Modal} from 'semantic-ui-react';
+import {Modal} from 'semantic-ui-react';
 
 import {
   setInStorage,
@@ -35,8 +35,8 @@ export default class AddFriend extends React.Component{
     return(
       <div className = {"popup-container "+ this.props.modal}>
         <Modal trigger={<li onClick = {this.props.click}>Add Friend</li>}
-          centered={false} className = "addfriend-container">
-          <Modal.Header>Add Friends</Modal.Header>
+          centered={false} className = "addfriend-container" size = "mini">
+          <Modal.Header><center>Add Friends</center></Modal.Header>
           <Modal.Content>
             <Modal.Description>
               <p>This is selena</p>

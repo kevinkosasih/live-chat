@@ -52,8 +52,8 @@ class LoginForm extends React.Component{
               <h3><b>Hoo Hoo</b></h3>
             </div>
             <Form.Field>
-              <label> Email </label>
-              <input placeholder='Email' type ="email"/>
+              <label> Username </label>
+              <input placeholder='Username' type ="email"/>
             </Form.Field>
             <Form.Field>
               <label>Password</label>
@@ -69,9 +69,8 @@ class LoginForm extends React.Component{
               LOG IN
             </Button>
             <p>
-              {"Doesn't have an account yet? "}
-              <Link to = '/RegisterForm' className = "colorClickHere">Click Here </Link>
-              to register!
+              {"Need an account? "}
+              <Link to = '/RegisterForm'>Register!</Link>
             </p>
           </Form>
         </div>
