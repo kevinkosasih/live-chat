@@ -131,9 +131,10 @@ class LoginForm extends React.Component{
               LOG IN
             </Button>
             <p>
-              {"Doesn't have an account yet? "}
-              <Link to = '/RegisterForm' className = "colorClickHere" >Click Here </Link>
-              to register!
+
+
+              {"Need an account? "}
+              <Link to = '/RegisterForm'>Register!</Link>
             </p>
           </Form>
         </div>

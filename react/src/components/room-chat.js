@@ -4,6 +4,7 @@ import Message from './text-message';
 import Profile from './profile/profile';
 import SearchFriend from './searchfriend/search-friend';
 import MenuFriendList from'./friendlist/menu-friend-list';
+import FriendList from'./friendlist/friend-list';
 import HeaderChat from './header-roomchat/header';
 import Content from './content';
 import {Route} from 'react-router-dom';
@@ -55,7 +56,8 @@ export default class RoomChat extends React.Component{
   }
   openChatRoom = (title) => {
     this.setState({
-      name : title
+      name : title,
+      isOpen : true
     })
   }
 
@@ -66,38 +68,20 @@ export default class RoomChat extends React.Component{
   }
 
   render(){
-    const {
-      account,
-      isLoading
-    } = this.state
-    const{match} =this.props
-    const rightColumn = ({match}) => (
-      <div className = "right-column">
-        <HeaderChat name={match.params.name}/>
-        <Content history={this.props.history}/>
-        <Message reciever={match.params.name} sender={account.username}/>
-      </div>
-    )
-    if(isLoading){
+
+    if(this.state.isOpen == true){
       return(
-        <div>
-          <p>Loading....</p>
-        </div>
-      )
-    }
-    return (
-      <div className = "background-top">
-        <div className = "container-page">
-          <div className = "container-chat">
-            <div className = "default-chatroom">
-              <Route path={match.url+'/:name'} component={rightColumn}/>
+        <div className = "background-top">
+          <div className = "container-page">
+            <div className = "rightColumn">
+              <RightColumn
+                name = {this.state.name}
+              />
             </div>
             <div className = "left-column">
                 <Profile
-                  togglePopup = {this.togglePopup}
-                  isOpen = {this.state.isOpen}
                   history = {this.props.history}
-                  name={account.name}
+                  isClose = {this.state.isOpen}
                 />
                 <div className = "searchBarContent">
                   <SearchFriend
@@ -113,7 +97,40 @@ export default class RoomChat extends React.Component{
             </div>
           </div>
         </div>
+      )
+    }
+    return (
+      <div className = "background-top">
+        <div className = "container-page">
+          <div className = "rightColumn">
+          </div>
+          <div className = "left-column">
+              <Profile
+                togglePopup = {this.togglePopup}
+                history = {this.props.history}
+                isClose = {this.state.isOpen}
+              />
+              <div className = "searchBarContent">
+                <SearchFriend
+                  search = {this.state.search}
+                  onChange = {this.inputSearch}
+                />
+              </div>
+              <MenuFriendList
+                changeName={this.openChatRoom}
+                searchValue = {this.state.search}
+              />
+          </div>
+        </div>
       </div>
     );
   }
 }
+
+const RightColumn = ({name}) => (
+  <div>
+    <HeaderChat name = {name}/>
+    <Content/>
+    <Message/>
+  </div>
+)

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import '../../App.css';
 import FriendList from './friend-list';
+import GroupList from '../grouplist/group-list';
 
 export default class SideNav extends Component {
     constructor(props) {
@@ -77,3 +78,31 @@ export default class SideNav extends Component {
         );
     }
 }
+
+
+const RenderedContent = ({ searchValue,changeName,tabName }) => {
+    if (tabName === 'Friends') {
+        return Friends(changeName,searchValue)
+    }
+    if (tabName === 'Groups') {
+        return Groups(changeName,searchValue)
+    }
+}
+
+const Friends = (changeName,searchValue) => (
+    <div className = "menu-friend-list">
+      <FriendList
+        changeName = {changeName}
+        search = {searchValue}
+      />
+    </div>
+)
+
+const Groups = (changeName,searchValue) => (
+    <div className = "menu-group-list">
+      <GroupList
+        changeName = {changeName}
+        search = {searchValue}
+      />
+    </div>
+)

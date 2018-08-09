@@ -30,16 +30,16 @@ export default class FriendList extends React.Component{
           <div className="friend-list-box">
             <div className="friend-list-text">
               {filteredList.map((item) => (
-                    <Link to={"/ChatRoom/"+item.username} key = {item.username+item.name}>
-                      {this.activeSocket(item.username)}
-                      <li className = "friend-list-text"
+
+
+                      <li className = "friend-list-text" key={item.id}
+
                         onClick={() =>
                           this.props.changeName(item.name)
                         }
                       >
                         {item.name}
                       </li>
-                    </Link>
                   )
                 )
               }

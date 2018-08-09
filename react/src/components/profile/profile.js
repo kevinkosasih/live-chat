@@ -10,12 +10,12 @@ import setting from '../../picture/menu.png';
   constructor(props){
     super(props)
       this.state = {
-        isOpen : false,
+        isOpen : this.props.isClose,
         showPopup : 'popup-show'
       }
    }
 
-  handleClose = () => {
+  handleOpen = () => {
       this.setState(prevState => (
         {
           isOpen : !prevState.isOpen
@@ -25,36 +25,39 @@ import setting from '../../picture/menu.png';
   }
 
    render(){
+
+     console.log("ini isOpen yang profile: "+this.state.isOpen);
+     console.log("ini showPopup yang profile: "+this.state.showPopup);
      return(
-      <div className = "profile-container">
+      <div className = "profile-container" >
         <div className = "profile-picture-position">
-          <Modal
-            trigger={
-              <div>
-                <img src={profile} className ="profileImage" alt=""/>
-                <b>{this.props.name}</b>
-              </div>
-            }
-            centered={false}
-          >
-            <Modal.Header>{this.props.name}</Modal.Header>
-            <Modal.Content image>
-              <Image wrapped size='medium' src={profile} alt="" />
-              <Modal.Description>
-                <p>This is {this.props.name}</p>
-              </Modal.Description>
-            </Modal.Content>
-          </Modal>
+            <Modal
+              trigger={
+                <div className = "profileImageClick">
+                  <img src={profile} className ="profileImage" alt=""/>
+                  <b>Selena</b>
+                </div>
+              }
+              centered={false}
+            >
+              <Modal.Header>Selena</Modal.Header>
+              <Modal.Content image>
+                <Image wrapped size='medium' src={profile} alt="" />
+                <Modal.Description>
+                  <p>This is selena</p>
+                </Modal.Description>
+              </Modal.Content>
+            </Modal>
         </div>
         <div className = "profile-setting-icon-position">
-          <img src = {setting} className = "setting-icon" onClick = {this.handleClose} alt=""/>
+          <img src = {setting} className = "setting-icon" onClick = {this.handleOpen} alt="" />
         </div>
         {this.state.isOpen ?
-          <AddFriend
-            modal = {this.state.showPopup}
-            click = {this.handleClose}
-            history = {this.props.history}/>
-          : <AddFriend/>}
+        <AddFriend
+          modal = {this.state.showPopup}
+          click = {this.handleOpen}
+          history = {this.props.history}/>
+        : <AddFriend/>}
       </div>
      );
    }
