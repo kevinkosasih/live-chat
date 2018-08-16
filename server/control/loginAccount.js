@@ -89,9 +89,7 @@ module.exports.dataToken = (req,res) =>{
   let getcookie  = cookie.split(";")
   let getToken = []
   for(var i=0;i<getcookie.length;i++){
-    console.log(i);
     getToken = getcookie[i].split("=")
-    console.log(getToken);
     if(getToken[0] == "Token" || getToken[0] == " Token"){
       break;
     }
@@ -99,9 +97,7 @@ module.exports.dataToken = (req,res) =>{
       getToken =[]
     }
   }
-  console.log(getToken);
   if(getToken[0]){
-    console.log('asd');
     let decryptAtob = atob(getToken[1])
     var decipher = crypto.createDecipher(algorithm,KeyCookies)
     var decrypted = decipher.update(decryptAtob,'hex','utf8')
@@ -143,7 +139,6 @@ module.exports.dataToken = (req,res) =>{
 
         const expDate = new Date(Date.now()+(1000*60*60*24))
         res.cookie('Token',encryptBtoa,{expires:expDate,httpOnly: true})
-        console.log("aadasd");
         return res.send({
           success:true,
           akun:account[0]

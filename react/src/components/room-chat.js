@@ -16,7 +16,8 @@ export default class RoomChat extends React.Component{
       isOpen : false,
       isLoading:true,
       ulang:[],
-      account:[]
+      account:[],
+      chatlog:[]
     }
     this.escClicked = this.escClicked.bind(this)
   }
@@ -27,7 +28,6 @@ export default class RoomChat extends React.Component{
        })
        .then(res => res.json())
        .then(json => {
-         console.log(json);
          if(!json.success){
            this.props.history.push('/')
          }
@@ -40,12 +40,19 @@ export default class RoomChat extends React.Component{
        })
   }
 
-  openChatRoom = (item) => {
-    this.setState({
+  openChatRoom = (item,log) => {
+    if(item !== null){
+      this.setState({
       name : item.name,
       isOpen : true,
       username:item.username
-    })
+      })
+    }
+    else{
+      this.setState({
+        chatlog:log
+      })
+    }
   }
 
   inputSearch = (e) =>{
@@ -78,6 +85,7 @@ export default class RoomChat extends React.Component{
               <HeaderChat name = {this.state.name}/>
               <Content
                 escClicked = {this.escClicked}
+                chatlog = {this.state.chatlog}
               />
               <Message
                 sender={account.username}

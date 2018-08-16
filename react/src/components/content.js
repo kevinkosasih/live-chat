@@ -25,6 +25,17 @@ export default class Content extends React.Component{
     return (
       <div className = "content-container">
         <div className = "content-chat">
+        {this.props.chatlog.length < 1 ?
+           null
+           :
+           this.props.chatlog.map((index) =>(
+            <div>
+              <p>{index.sender}</p>
+              <p>{index.message}</p>
+              <hr/>
+            </div>
+            )
+           )}
         </div>
       </div>
     );
