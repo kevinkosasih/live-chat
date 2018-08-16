@@ -5,7 +5,15 @@ import {
 }from "../../socket/socketconnect"
 
 export default class FriendList extends React.Component{
+  constructor(props){
+    super(props);
 
+    this.state = {
+      chatlog:[]
+    }
+
+    this.activeSocket = this.activeSocket.bind(this)
+  }
   componentDidMount(){
     if(this.props.openedSocket()){
       this.activeSocket(this.props.item.username)
@@ -13,7 +21,10 @@ export default class FriendList extends React.Component{
   }
   activeSocket(port){
     recieveChat(port,(err,recieve)=>{
-      console.log(recieve);
+      this.setState({
+        chatlog:this.state.chatlog.concat({send:recieve.send,message:recieve.message.message,sender:recieve.message.reciever,reciever:recieve.message.sender})
+      })
+      this.props.changeName(null,this.state.chatlog)
     })
   }
 
@@ -22,7 +33,7 @@ export default class FriendList extends React.Component{
     return(
       <li className = "friend-list-text"
         onClick={() =>
-          this.props.changeName(item)
+          this.props.changeName(item,this.state.chatlog)
         }
       >
         {item.name}
