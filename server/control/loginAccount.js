@@ -81,43 +81,35 @@ module.exports.login = (req,res) => {
 module.exports.dataToken = (req,res) =>{
   const {headers} = req;
   const {cookie} = headers
-  // console.log(res.socket);
-  res.socket.on('connection',(asd) =>{
-    console.log("infnii");
-  })
+  if(!cookie){
+    return res.send({
+      success:false
+    })
+  }
   let getcookie  = cookie.split(";")
   let getToken = []
   for(var i=0;i<getcookie.length;i++){
+    console.log(i);
     getToken = getcookie[i].split("=")
-    if(getToken[0] == "Token"){
+    console.log(getToken);
+    if(getToken[0] == "Token" || getToken[0] == " Token"){
       break;
     }
+    else{
+      getToken =[]
+    }
   }
-  let decryptAtob = atob(getToken[1])
-  var decipher = crypto.createDecipher(algorithm,KeyCookies)
-  var decrypted = decipher.update(decryptAtob,'hex','utf8')
-  decrypted += decipher.final('utf8');
-
-  AccountSession.find({
-    _id:JSON.parse(decrypted).token,
-    isDeleted:false
-  },(err,data) =>{
-    if (err) {
-      console.log(err);
-      return res.send({
-        success: false,
-        message: 'Error: Server error'
-      });
-    }
-    if(data.length != 1){
-      return res.send({
-        success: false,
-        message: 'Error: '
-      });
-    }
-    Account.find({
-      _id:data[0].accountid
-    },{password:0,_id:0},(err,account)=>{
+  console.log(getToken);
+  if(getToken[0]){
+    console.log('asd');
+    let decryptAtob = atob(getToken[1])
+    var decipher = crypto.createDecipher(algorithm,KeyCookies)
+    var decrypted = decipher.update(decryptAtob,'hex','utf8')
+    decrypted += decipher.final('utf8');
+    AccountSession.find({
+      _id:JSON.parse(decrypted).token,
+      isDeleted:false
+    },(err,data) =>{
       if (err) {
         console.log(err);
         return res.send({
@@ -125,21 +117,43 @@ module.exports.dataToken = (req,res) =>{
           message: 'Error: Server error'
         });
       }
-      const data  = JSON.stringify({
-        token:JSON.parse(decrypted).token
-      })
-      var cipher = crypto.createCipher(algorithm,KeyCookies)
-      var crypted = cipher.update(data,'utf8','hex')
-      crypted += cipher.final('hex');
-      const encryptBtoa = btoa(crypted)
+      if(data.length != 1){
+        return res.send({
+          success: false,
+          message: 'Error: '
+        });
+      }
+      Account.find({
+        _id:data[0].accountid
+      },{password:0,_id:0},(err,account)=>{
+        if (err) {
+          console.log(err);
+          return res.send({
+            success: false,
+            message: 'Error: Server error'
+          });
+        }
+        const data  = JSON.stringify({
+          token:JSON.parse(decrypted).token
+        })
+        var cipher = crypto.createCipher(algorithm,KeyCookies)
+        var crypted = cipher.update(data,'utf8','hex')
+        crypted += cipher.final('hex');
+        const encryptBtoa = btoa(crypted)
 
-      const expDate = new Date(Date.now()+(1000*60*60*24))
-      res.cookie('Token',encryptBtoa,{expires:expDate,httpOnly: true})
-      return res.send({
-        success:true,
-        akun:account[0]
+        const expDate = new Date(Date.now()+(1000*60*60*24))
+        res.cookie('Token',encryptBtoa,{expires:expDate,httpOnly: true})
+        console.log("aadasd");
+        return res.send({
+          success:true,
+          akun:account[0]
+        })
       })
-
     })
-  })
+  }
+  else{
+    return res.send({
+    success:false
+    })
+  }
 }

@@ -18,7 +18,7 @@ export default class Content extends React.Component{
   escOnClick(event){
     if(event.keyCode === 27) {
       //Do whatever when esc is pressed
-      this.props.history.push('/ChatRoom')
+      this.props.escClicked()
     }
   }
   render(){

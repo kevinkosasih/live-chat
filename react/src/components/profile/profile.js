@@ -16,18 +16,14 @@ import setting from '../../picture/menu.png';
    }
 
   handleOpen = () => {
-      this.setState(prevState => (
+    this.setState(prevState => (
         {
           isOpen : !prevState.isOpen
         }
-      )
-    )
+    ))
   }
 
    render(){
-
-     console.log("ini isOpen yang profile: "+this.state.isOpen);
-     console.log("ini showPopup yang profile: "+this.state.showPopup);
      return(
       <div className = "profile-container" >
         <div className = "profile-picture-position">
@@ -35,7 +31,7 @@ import setting from '../../picture/menu.png';
               trigger={
                 <div className = "profileImageClick">
                   <img src={profile} className ="profileImage" alt=""/>
-                  <b>Selena</b>
+                  <b>{this.props.name}</b>
                 </div>
               }
               centered={false}

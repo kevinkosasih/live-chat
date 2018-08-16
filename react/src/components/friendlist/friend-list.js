@@ -1,14 +1,16 @@
 import React from 'react';
 import '../../App.css';
-
-import {Link} from 'react-router-dom';
-
 import {
   recieveChat
 }from "../../socket/socketconnect"
 
 export default class FriendList extends React.Component{
 
+  componentDidMount(){
+    if(this.props.openedSocket()){
+      this.activeSocket(this.props.item.username)
+    }
+  }
   activeSocket(port){
     recieveChat(port,(err,recieve)=>{
       console.log(recieve);
@@ -16,36 +18,15 @@ export default class FriendList extends React.Component{
   }
 
   render(){
-    const list = this.props.friendlist;
-    const filteredList = list.filter(
-      (item) => {
-        return (
-          item.name.toLowerCase().indexOf(this.props.search.toLowerCase()) !== -1
-        );
-      }
-    );
-
+    const item = this.props.item;
     return(
-        <div className = "friend-list-container">
-          <div className="friend-list-box">
-            <div className="friend-list-text">
-              {filteredList.map((item) => (
-
-
-                      <li className = "friend-list-text" key={item.id}
-
-                        onClick={() =>
-                          this.props.changeName(item.name)
-                        }
-                      >
-                        {item.name}
-                      </li>
-                  )
-                )
-              }
-            </div>
-          </div>
-        </div>
+      <li className = "friend-list-text"
+        onClick={() =>
+          this.props.changeName(item)
+        }
+      >
+        {item.name}
+      </li>
     );
   }
 }

@@ -1,8 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom';
-import { Button, Checkbox, Form } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 import {Link} from "react-router-dom";
-import logo from '../../picture/logo2.png'; 
+import logo from '../../picture/logo2.png';
 
 class RegisterForm extends React.Component{
   constructor(props){
@@ -34,7 +33,7 @@ class RegisterForm extends React.Component{
     let lastName = this.refs.lastName.value;
     let regex = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
 
-    if(username === ''){
+    if(!username){
       this.setState({
         usernameIsValid : false,
         messageUsername : "This field is required"
@@ -52,7 +51,7 @@ class RegisterForm extends React.Component{
         messageUsername : ''
       });
     }
-    if(firstName === ''){
+    if(!firstName){
       this.setState ({
         firstNameIsValid : false,
         messageFirstName : "this field is required"
@@ -64,7 +63,7 @@ class RegisterForm extends React.Component{
         messageFirstName : ''
       })
     }
-    if(lastName === ''){
+    if(!lastName){
       this.setState ({
         lastNameIsValid : false,
         messageLastName : "this field is required"
@@ -76,7 +75,7 @@ class RegisterForm extends React.Component{
         messageLastName : ''
       })
     }
-    if (email === ''){
+    if (!email){
       this.setState({
         emailIsValid : false,
         messageEmail : "This field is required"
@@ -94,7 +93,7 @@ class RegisterForm extends React.Component{
         messageEmail : ''
       });
     }
-    if (password == ''){
+    if (!password){
       this.setState({
         passwordIsValid : false,
         messagePass : "This field is required"
@@ -130,7 +129,33 @@ class RegisterForm extends React.Component{
         messageRetype : ''
       })
     }
-    console.log(firstName);
+    if(this.state.usernameIsValid && this.state.firstNameIsValid && this.state.passwordIsValid && this.state.retypeIsValid && this.state.emailIsValid && this.state.lastNameIsValid){
+      this.RegisUser(username,email,password,retypePassword,firstName,lastName);
+    }
+  }
+
+  RegisUser(username,email,password,retypePassword,firstName,lastName){
+    let name = firstName +" "+lastName
+    fetch('/regisnew',{
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+        name:name,
+        email:email,
+      }),
+    }).then(res => res.json())
+      .then(json =>{
+        console.log(json);
+        if(json.success){
+          console.log(json);
+          this.props.history.push('/LoginForm')
+        }
+      })
+    console.log(name);
   }
 
   render(){
@@ -139,7 +164,7 @@ class RegisterForm extends React.Component{
         <div className ="formRegister">
           <Form className = "formModal">
             <div className = "logo-position" >
-              <img src = {logo} className = "logo"/>
+              <img src = {logo} className = "logo" alt=''/>
             </div>
             <div className = "login-position">
               <h3><b>Hoo Hoo</b></h3>
@@ -223,101 +248,4 @@ class RegisterForm extends React.Component{
   }
 }
 
-  // isClick = () =>{
-  //   let fieldValidationErrors = this.state.formErrors;
-  //
-  //   if(this.state.isClick){
-  //     this.setState({
-  //       isClick : false
-  //     }, this.validateForm)
-  //     fieldValidationErrors.Click = " the checkbox"
-  //   }
-  //   else {
-  //     this.setState({
-  //       isClick : true
-  //     }, this.validateForm)
-  //     fieldValidationErrors.Click = ""
-  //   }
-  // }
-
-  // handleUserInput = (e) => {
-  //   const name = e.target.name;
-  //   const value = e.target.value;
-  //   this.setState({[name]: value},
-  //   () => {this.handleUserData(value)});
-  // }
-
-  // validateField (fieldName, value) {
-  //   let fieldValidationErrors = this.state.formErrors;
-  //   let usernameValid = this.state.usernameValid;
-  //   let emailValid = this.state.emailValid;
-  //   let passwordValid = this.state.passwordValid;
-  //   let password = this.state.password;
-  //   let retypePassword = this.state.retypePassword;
-  //
-  //   switch(fieldName) {
-  //     case 'username':
-  //       usernameValid = value.length >= 5;
-  //       fieldValidationErrors.Username = usernameValid ? '' : ' must at least 5 character';
-  //       break;
-  //     case 'email':
-  //       emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-  //       fieldValidationErrors.Email = emailValid ? '' : ' is invalid';
-  //       break;
-  //     case 'password':
-  //       if(password.length < 6){
-  //         fieldValidationErrors.Password = " must at least 6 characters"
-  //       }
-  //       else if (retypePassword === ''){
-  //         fieldValidationErrors.Password = "";
-  //       }
-  //       else if(password !== retypePassword){
-  //         fieldValidationErrors.Password = " did not match";
-  //       }
-  //       else {
-  //         fieldValidationErrors.Password = "";
-  //         passwordValid = true;
-  //       }
-  //       break;
-  //     case 'retypePassword':
-  //       if(retypePassword === ''){
-  //         fieldValidationErrors.Password = "";
-  //       }
-  //       else if(password !== retypePassword){
-  //         fieldValidationErrors.Password = " did not match";
-  //         passwordValid = false;
-  //       }
-  //       else if(retypePassword.length < 6){
-  //         fieldValidationErrors.Password = "";
-  //       }
-  //       else {
-  //         fieldValidationErrors.Password = "";
-  //         passwordValid = true;
-  //       }
-  //         break;
-  //       default:
-  //         break;
-  //   }
-  //   this.setState({formErrors: fieldValidationErrors,
-  //                   usernameValid : usernameValid,
-  //                   emailValid: emailValid,
-  //                   passwordValid: passwordValid
-  //                 }, this.validateForm);
-  // }
-  //
-  // validateForm (){
-  //   this.setState(
-  //     {
-  //       formValid:
-  //       this.state.usernameValid &&
-  //       this.state.emailValid &&
-  //       this.state.passwordValid &&
-  //       this.state.isClick
-  //     }
-  //   );
-  //   console.log("username: "+this.state.usernameValid);
-  //   console.log("email: "+this.state.emailValid);
-  //   console.log("password: "+this.state.passwordValid);
-  //   console.log("Click: "+this.state.isClick);
-  // }
 export default RegisterForm;

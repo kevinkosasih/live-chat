@@ -2,107 +2,108 @@ import React, { Component } from 'react';
 
 import '../../App.css';
 import FriendList from './friend-list';
-import GroupList from '../grouplist/group-list';
 
 export default class SideNav extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            renderTab: 'Friends',
-            Friends:'selected-tab',
-            Groups:''
+            Friends:{
+              li:'selected-tab',
+              tab:'show'
+            },
+            Chats:{
+              li:'',
+              tab:''
+            },
+            friendlistLength:this.props.friendlist.length,
+            openedSocket:0
         }
+        this.openedSocket = this.openedSocket.bind(this)
     }
 
     changeTab(tabName) {
       if(tabName === 'Friends'){
         this.setState({
-          Friends:'selected-tab',
-          Groups:''
+          Friends:{
+            li:'selected-tab',
+            tab:'show'
+          },
+          Chats:{
+            li:'',
+            tab:''
+          }
         })
       }else{
         this.setState({
-          Friends:'',
-          Groups:'selected-tab'
+          Friends:{
+            li:'',
+            tab:''
+          },
+          Chats:{
+            li:'selected-tab',
+            tab:'show'
+          },
         })
       }
-        this.setState({ renderTab: tabName })
     }
-
+    openedSocket(){
+      const{openedSocket,friendlistLength} = this.state;
+      if(openedSocket === friendlistLength){
+        return false
+      }
+      else{
+        this.setState({
+          openedSocket:openedSocket+1
+        })
+        return true
+      }
+    }
     render() {
-        const { renderTab ,Friends, Groups} = this.state
-        //
-        const RenderedContent = ({ searchValue,changeName,tabName }) => {
-            if (tabName === 'Friends') {
-                return FriendsTab(changeName,searchValue)
-            }
-            if (tabName === 'Groups') {
-                return GroupsTab()
-            }
+        const { Friends, Chats} = this.state
+        const list = this.props.friendlist;
+        if(!list){
+          return null
         }
-        //
-        const FriendsTab = (changeName,searchValue) => (
-            <div className = "menu-friend-list">
-              <FriendList
-                changeName = {changeName}
-                search = {searchValue}
-                friendlist={this.props.friendlist}
-                />
-            </div>
-        )
-        //
-        const GroupsTab = () => (
-            <div className = "menu-group-list">
-              This is the about page
-            </div>
-        )
-        //
+        const filteredList = list.filter(
+          (item) => {
+            return (
+              item.name.toLowerCase().indexOf(this.props.searchValue.toLowerCase()) !== -1
+            );
+          }
+        );
         return (
           <div className = "menu-friend-container">
                 <div className = "menu-friend-box">
-                  <li onClick={() => this.changeTab('Friends')} className = {"li-friends " + Friends}>
+                  <li onClick={() => this.changeTab('Friends')} className = {"li-friends " + Friends.li}>
                       Friends
                   </li>
-                  <li onClick={() => this.changeTab('Groups')} className = {"li-groups " + Groups}>
-                      Groups
+                  <li onClick={() => this.changeTab('Chats')} className = {"li-groups " + Chats.li}>
+                      Chats
                   </li>
                 </div>
-                <RenderedContent
-                  searchValue = {this.props.searchValue}
-                  changeName = {this.props.changeName}
-                  tabName = {renderTab}
-                />
+                <div className = {"menu-friend-list tab "+Friends.tab}>
+                  <div className = "friend-list-container">
+                    <div className="friend-list-box">
+                      <div className="friend-list-text">
+                      {filteredList.map((item) => (
+                        <FriendList
+                          changeName = {this.props.changeName}
+                          item = {item}
+                          key = {item._id}
+                          openedSocket={this.openedSocket}
+                        />
+                        )
+                      )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className ={"menu-group-list tab "+Chats.tab}>
+                  This is the about page
+                </div>
           </div>
 
         );
     }
 }
-
-
-const RenderedContent = ({ searchValue,changeName,tabName }) => {
-    if (tabName === 'Friends') {
-        return Friends(changeName,searchValue)
-    }
-    if (tabName === 'Groups') {
-        return Groups(changeName,searchValue)
-    }
-}
-
-const Friends = (changeName,searchValue) => (
-    <div className = "menu-friend-list">
-      <FriendList
-        changeName = {changeName}
-        search = {searchValue}
-      />
-    </div>
-)
-
-const Groups = (changeName,searchValue) => (
-    <div className = "menu-group-list">
-      <GroupList
-        changeName = {changeName}
-        search = {searchValue}
-      />
-    </div>
-)

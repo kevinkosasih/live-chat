@@ -5,6 +5,7 @@ function sendChat(msg) {
 }
 
 function recieveChat(user,toFront){
+  console.log(user);
   socket.on(user, message => toFront(null,message));
 }
 export { sendChat ,recieveChat};

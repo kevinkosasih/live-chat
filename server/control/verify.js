@@ -17,7 +17,7 @@ module.exports.verify = (req,res) => {
   let getToken = []
   for(var i=0;i<getcookie.length;i++){
     getToken = getcookie[i].split("=")
-    if(getToken[0] == "Token"){
+    if(getToken[0] == "Token" || getToken[0] == " Token"){
       break;
     }
     else{

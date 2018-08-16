@@ -409,6 +409,12 @@ body{
   background-color: white !important;
   border-bottom: 1px solid #FFF !important;
 }
+.tab{
+  display: none;
+}
+.show{
+  display: block !important;
+}
 
 .container-message{
   width: 70%;
