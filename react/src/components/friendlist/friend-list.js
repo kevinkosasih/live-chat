@@ -15,9 +15,10 @@ export default class FriendList extends React.Component{
     this.activeSocket = this.activeSocket.bind(this)
   }
   componentDidMount(){
-    if(this.props.openedSocket()){
       this.activeSocket(this.props.item.username)
-    }
+  }
+  componentWillUnmount(){
+    this.activeSocket(this.props.item.username)
   }
   activeSocket(port){
     recieveChat(port,(err,recieve)=>{

@@ -16,10 +16,7 @@ export default class SideNav extends Component {
               li:'',
               tab:''
             },
-            friendlistLength:this.props.friendlist.length,
-            openedSocket:0
         }
-        this.openedSocket = this.openedSocket.bind(this)
     }
 
     changeTab(tabName) {
@@ -45,18 +42,6 @@ export default class SideNav extends Component {
             tab:'show'
           },
         })
-      }
-    }
-    openedSocket(){
-      const{openedSocket,friendlistLength} = this.state;
-      if(openedSocket === friendlistLength){
-        return false
-      }
-      else{
-        this.setState({
-          openedSocket:openedSocket+1
-        })
-        return true
       }
     }
     render() {
@@ -91,8 +76,7 @@ export default class SideNav extends Component {
                           changeName = {this.props.changeName}
                           item = {item}
                           key = {item._id}
-                          openedSocket={this.openedSocket}
-                        />
+                          />
                         )
                       )}
                       </div>

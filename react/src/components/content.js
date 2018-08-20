@@ -35,9 +35,9 @@ export default class Content extends React.Component{
               <hr/>
             </div>
             )
-           )}
-        </div>
+        )}
       </div>
+    </div>
     );
   }
 }

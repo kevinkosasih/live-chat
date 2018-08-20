@@ -45,7 +45,8 @@ export default class RoomChat extends React.Component{
       this.setState({
       name : item.name,
       isOpen : true,
-      username:item.username
+      username:item.username,
+      chatlog:log
       })
     }
     else{
