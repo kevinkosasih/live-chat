@@ -2,7 +2,6 @@ import React from 'react';
 import './content.css';
 
 
-
 export default class Content extends React.Component{
   constructor(props){
     super(props)
@@ -18,15 +17,26 @@ export default class Content extends React.Component{
   escOnClick(event){
     if(event.keyCode === 27) {
       //Do whatever when esc is pressed
-      this.props.history.push('/ChatRoom')
+      this.props.escClicked()
     }
   }
   render(){
     return (
       <div className = "content-container">
         <div className = "content-chat">
-        </div>
+        {this.props.chatlog.length < 1 ?
+           null
+           :
+           this.props.chatlog.map((index) =>(
+            <div>
+              <p>{index.sender}</p>
+              <p>{index.message}</p>
+              <hr/>
+            </div>
+            )
+        )}
       </div>
+    </div>
     );
   }
 }

@@ -9,26 +9,23 @@ import {
 
 class WelcomePage extends React.Component{
   componentDidMount(){
-    const obj = getFromStorage('chattoken');
-     if (obj && obj.token) {
-       fetch('/getdata?token='+obj.token)
-       .then(json => {
-         this.props.history.push('/chatRoom')
-       })
-     } else {
-       setInStorage('chattoken',null)
-       this.setState({
-         isLoading: false,
-       });
-     }
+    fetch('/verify',{
+      credentials:'include'
+    })
+     .then(res => res.json())
+     .then(json => {
+       if(json.success){
+          this.props.history.push('/ChatRoom')
+       }
+     })
   }
   render (){
     return (
       <div className = "welcomeButton">
         <Link to = '/LoginForm'>
           <Button
-          inverted color = "orange"
-          size = "huge">
+          outline color = "warning"
+          size ="lg">
             Welcome to chat application website!
             Click me to login :)
           </Button>
