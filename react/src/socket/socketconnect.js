@@ -1,7 +1,6 @@
 import openSocket from 'socket.io-client';
 const  socket = openSocket('http://10.183.28.154:8000');
 function sendChat(msg) {
-  console.log(msg);
   socket.emit('sendChat', msg);
 }
 

@@ -6,9 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import LoginPage from './components/login/login-page';
 import RegisterPage from './components/register/register-page';
-import RoomChat from './components/room-chat';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'mdbreact/dist/css/mdb.css';
+import RoomChat from './components/room-chat/room-chat';
 
 ReactDOM.render(
   <BrowserRouter>

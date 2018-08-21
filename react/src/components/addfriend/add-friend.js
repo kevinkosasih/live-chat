@@ -1,11 +1,23 @@
 import React from 'react';
-import './grouplist.css';
+import './addfriend.css';
 
-export default class FriendList extends React.Component{
+import SearchAddFriend from './search-add-friend';
+import addcontact from '../../picture/add-user.png';
+
+import {Modal,Button} from 'semantic-ui-react';
+
+import {
+  setInStorage,
+  getFromStorage
+}from '../../token/storage'
+
+export default class AddFriend extends React.Component{
   constructor(props){
     super(props);
 
     this.state = {
+      open : false,
+      search : '',
       location: [
         {
             id: 0,
@@ -225,36 +237,91 @@ export default class FriendList extends React.Component{
         }
       ]
     }
+
+    this.logout = this.logout.bind(this)
   }
+  logout(e) {
+    e.preventDefault()
+     const obj = getFromStorage('http://localhost:3000');
+     if (obj && obj.token) {
+       const { token } = obj;
+       // Verify token
+       fetch('http://10.183.28.154:3001/logout?token=' + token)
+         .then(res => res.json())
+         .then(json => {
+           if (json.success) {
+             setInStorage('http://localhost:3000', null)
+             this.props.history.push('/LoginForm')
+           }
+          }
+        );
+     }
+   }
+   show = (size,name) => {
+     this.setState(
+       {
+         size,
+         open: true,
+         name : name
+       }
+     )
+   }
+
+   close = () => {
+     this.setState({ open: false })
+   }
+
+   inputSearch = (e) =>{
+     this.setState ({
+       search : e.target.value
+     })
+   }
 
   render(){
+    const { open, size } = this.state;
     const list = this.state.location;
     const filteredList = list.filter(
-      (item) => {
+      (friend) => {
         return (
-          item.title.toLowerCase().indexOf(this.props.search.toLowerCase()) !== -1
+          friend.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
         );
       }
     );
-
+    console.log("Nmr : ",filteredList);
     return(
-        <div className = "group-list-container">
-          <div className="group-list-box">
-            <div className="group-list-text">
-              {filteredList.map((item) => (
-                      <li className = "group-list-text" key={item.id}
-                        onClick={() =>
-                          this.props.changeName(item.title)
-                        }
-                      >
-                        {item.title}
-                      </li>
+      <div className = {"popup-container "+ this.props.modal}>
+        <Modal trigger={<li onClick = {this.props.click}>Add Friend</li>}
+          centered={false} size = "mini" className = "addfriend-modal">
+          <Modal.Header><center>Add Friends</center></Modal.Header>
+          <div className = "searchAddFriend">
+            <SearchAddFriend
+              onChange = {this.inputSearch}
+              search = {this.state.value}/>
+          </div>
+          <div className = "addfriend-box">
+              {filteredList.map((friend) =>(
+                    <li key = {friend.id} className = "addfriend-text">{friend.title}
+                      <button className = "addfriend-button-setting" onClick = {() => {this.show('mini',friend.title)}}>
+                        <img src ={addcontact} className = "addfriend-icon" />
+                      </button>
+                    </li>
                   )
                 )
               }
-            </div>
           </div>
-        </div>
+        </Modal>
+        <li onClick={this.logout}>Log Out</li>
+          <Modal size={size} open={open} onClose={this.close}>
+            <Modal.Header>Add Friend</Modal.Header>
+            <Modal.Content>
+              <p>Add {this.state.name} as a friend?</p>
+            </Modal.Content>
+            <Modal.Actions>
+              <Button negative onClick = {this.close}>No</Button>
+              <Button positive>Yes</Button>
+            </Modal.Actions>
+          </Modal>
+      </div>
     );
   }
 }

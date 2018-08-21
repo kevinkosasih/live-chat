@@ -1,5 +1,5 @@
 import React from 'react';
-import './searchfriend.css';
+import './addfriend.css';
 import icon from '../../picture/search.png';
 
 export default class SearchFriend extends React.Component{
@@ -10,7 +10,7 @@ export default class SearchFriend extends React.Component{
         <input
           type = "text"
           className = "searchfriend"
-          placeholder = "Search or start new chat"
+          placeholder = "Search Add Friend"
           value = {this.props.search}
           onChange = {this.props.onChange}/>
         <img src = {icon} alt=""/>

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../App.css';
+import './header.css';
 
 import profileImage from '../../picture/muka.jpg';
 import setting from '../../picture/menu.png';
@@ -19,7 +19,9 @@ export default class HeaderChat extends React.Component{
               </Modal.Description>
             </Modal.Content>
           </Modal>
-          {this.props.name}
+          <div className = "header-room-name">
+            {this.props.name}
+          </div>
         </div>
         <div className = "header-setting-icon-position">
           <Popup

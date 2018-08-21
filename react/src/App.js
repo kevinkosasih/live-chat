@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import WelcomePage from './components/welcome-page';
+import WelcomePage from './components/welcome-page/welcome-page';
 import './App.css';
 
 class App extends Component {
@@ -8,7 +8,7 @@ class App extends Component {
     return(
       <div className="App">
         <center>
-          <WelcomePage history={this.props.history}/>
+          <WelcomePage/>
         </center>
       </div>
     );

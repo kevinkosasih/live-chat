@@ -1,6 +1,6 @@
 import React from 'react';
-import '../../App.css';
-import AddFriend from './addfriend';
+import './profile.css';
+import AddFriend from '../addfriend/add-friend';
 
 import { Image, Modal} from 'semantic-ui-react';
 import profile from '../../picture/muka.jpg';
@@ -16,22 +16,27 @@ import setting from '../../picture/menu.png';
    }
 
   handleOpen = () => {
-    this.setState(prevState => (
+      this.setState(prevState => (
         {
           isOpen : !prevState.isOpen
         }
-    ))
+      )
+    )
   }
 
    render(){
+     console.log("ini isOpen yang profile: "+this.state.isOpen);
+     console.log("ini showPopup yang profile: "+this.state.showPopup);
      return(
       <div className = "profile-container" >
-        <div className = "profile-picture-position">
+        <div className = "profileImageClick">
             <Modal
               trigger={
-                <div className = "profileImageClick">
-                  <img src={profile} className ="profileImage" alt=""/>
-                  <b>{this.props.name}</b>
+                <div className = "profileAndName">
+                  <img src={profile} className = "profileImage" alt=""/>
+                  <div className = "profileName">
+                    <b>Selena</b>
+                  </div>
                 </div>
               }
               centered={false}
